@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-// Java program to calculate MD5 hash value
+
 public class MD5 {
     public static String getMd5(String input) {
         try {
