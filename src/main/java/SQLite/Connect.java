@@ -12,7 +12,7 @@ public class Connect {
     public static Connection connect(String nameDB) {
 
         try {
-            // db parameters
+
             String url = "jdbc:sqlite:" + nameDB;
             // create a connection to the database
             conn = DriverManager.getConnection(url);
