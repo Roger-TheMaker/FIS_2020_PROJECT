@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class Connect {
     private static Connection conn = null;
 
-    public static void connect(String nameDB) {
+    public static Connection connect(String nameDB) {
 
         try {
             // db parameters
@@ -19,9 +19,12 @@ public class Connect {
 
             System.out.println("Connection to SQLite has been established.");
 
+            return conn;
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return null;
     }
 
     public static void closeConnection() {
