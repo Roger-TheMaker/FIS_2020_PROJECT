@@ -9,11 +9,13 @@ public class Select {
         Connection conn = Connect.connect(nameDB);
         String result = "";
         try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql_command);
+            PreparedStatement pstmt  = conn.prepareStatement(sql_command);
+            ResultSet rs = pstmt.executeQuery();
 
-            if(rs.next())
+            if(rs.next()) {
+
                 return "1";
+            }
             else
                 return "0";
 

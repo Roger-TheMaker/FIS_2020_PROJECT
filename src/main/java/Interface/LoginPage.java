@@ -1,10 +1,12 @@
 package Interface;
 
 import Encryption.MD5;
+import SQLite.CreateTable;
 import SQLite.Select;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.lang.reflect.Type;
 
 public class LoginPage extends JDialog {
     private JPanel contentPane;
@@ -19,10 +21,11 @@ public class LoginPage extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+
         UsernameEmailTextField.setText("Username / Email");
         PasswordTextField.setText("password");
-        char[] password = PasswordTextField.getPassword();
-        final String password_hashed = MD5.getMd5(String.valueOf(password));
+
+
 
 
         // call onCancel() when cross is clicked
@@ -39,33 +42,32 @@ public class LoginPage extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+
         LoginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String checkUsernameEmail = "";
                 String checkPassword = "";
+                char[] password = PasswordTextField.getPassword();
+                String password_hashed = MD5.getMd5(String.valueOf(password));
 
-                String sql_check_username_email = "SELECT CASE WHEN EXISTS (" +
-                        "SELECT email " +
-                        "FROM REGISTRATION " +
-                        "WHERE email = '" + UsernameEmailTextField.getText() + "'" +
-                        ") " +
-                        "THEN CAST(1 AS BIT) " +
-                        "ELSE CAST(0 AS BIT) END ";
 
-                String sql_check_password = "SELECT CASE WHEN EXISTS (" +
-                        "SELECT email " +
-                        "FROM REGISTRATION " +
-                        "WHERE email = '" + password_hashed + "'" +
-                        ") " +
-                        "THEN CAST(1 AS BIT) " +
-                        "ELSE CAST(0 AS BIT) END ";
+
+                String tableContent = "id integer PRIMARY KEY, FirstName text NOT NULL, LastName text NOT NULL, " +
+                        "Email text NOT NULL, Username text NOT NULL, Password text NOT NULL ";
+                CreateTable.CreateTable("test.db","REGISTRATION",tableContent);
+
+
+                String sql_check_usernameEmail = "SELECT * FROM REGISTRATION WHERE Username = " + "\'" + UsernameEmailTextField.getText() + "\'";
+                String sql_check_password = "SELECT * FROM REGISTRATION WHERE Password = " + "\'" + password_hashed + "\'";
 
                 //update the values for existance checking
-                checkUsernameEmail = Select.CheckEntry("test.db",sql_check_username_email);
+                checkUsernameEmail = Select.CheckEntry("test.db",sql_check_usernameEmail);
                 checkPassword = Select.CheckEntry("test.db",sql_check_password);
 
                 if(checkUsernameEmail.equals("0") || checkPassword.equals("0"))
                     UsernameEmailTextField.setText("INVALID USERNAME OR PASSWORD");
+
 
 
             }
