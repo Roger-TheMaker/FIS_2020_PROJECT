@@ -70,8 +70,8 @@ public class RegistrationPage extends JDialog {
                 CreateTable.CreateTable("test.db","REGISTRATION",tableContent);
 
 
-                String sql_check_username = "SELECT Username FROM REGISTRATION WHERE Username like " + "\"" + username + "\"";;
-                String sql_check_email = "SELECT Email FROM REGISTRATION WHERE Email like " + "\"" + email + "\"";;
+                String sql_check_username = "SELECT * FROM REGISTRATION WHERE Username = " + "\'" + username + "\'";
+                String sql_check_email = "SELECT * FROM REGISTRATION WHERE Email = " + "\'" + email + "\'";
 
                 //update the values for existance checking
                 checkgetEmail = Select.CheckEntry("test.db",sql_check_email);
@@ -80,8 +80,11 @@ public class RegistrationPage extends JDialog {
 
                 String parameterList = "FirstName, LastName, Email, Username, Password";
 
-                String valueList = firstname +", "+ lastname+", "+email+", " +
-                                        username+", " + "\"" + password_hash + "\"";;
+                String valueList = "\'" + firstname + "\'" +", "+ "\'" + lastname + "\'"+", "+"\'" + email + "\'"+", " +
+                        "\'" + username + "\'"+", " + "\'" + password_hash + "\'";;
+
+                System.out.println(valueList);
+                System.out.println(checkgetEmail);
 
                 if(checkgetEmail.equals("0") || checkgetUsername.equals("0")) {
                     Insert.Insert("test.db","REGISTRATION",parameterList,valueList);
