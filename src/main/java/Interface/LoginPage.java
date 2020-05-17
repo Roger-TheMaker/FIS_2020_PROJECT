@@ -101,6 +101,5 @@ public class LoginPage extends JDialog {
         dialog.setTitle("Login");
         dialog.setSize(200,200);
         dialog.setVisible(true);
-        System.exit(0);
     }
 }
