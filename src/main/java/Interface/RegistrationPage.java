@@ -63,40 +63,30 @@ public class RegistrationPage extends JDialog {
                 String firstname = FirstNameTextField.getText();
                 String lastname = LastNameTextField.getText();
                 char[] password = PassowordTextField.getPassword();
-                String password_hashed = MD5.getMd5(String.valueOf(password));
+                String password_hash = MD5.getMd5(String.valueOf(password));
 
                 String tableContent = "id integer PRIMARY KEY, FirstName text NOT NULL, LastName text NOT NULL, " +
                         "Email text NOT NULL, Username text NOT NULL, Password text NOT NULL ";
                 CreateTable.CreateTable("test.db","REGISTRATION",tableContent);
 
 
-                String sql_email_check = "SELECT CASE WHEN EXISTS (" +
-                        "SELECT email " +
-                        "FROM REGISTRATION " +
-                        "WHERE email = '" + email + "'" +
-                        ") " +
-                        "THEN CAST(1 AS BIT) " +
-                        "ELSE CAST(0 AS BIT) END ";
-
-                String sql_username_check = "SELECT CASE WHEN EXISTS (" +
-                        "SELECT username " +
-                        "FROM REGISTRATION " +
-                        "WHERE username = '" + username + "'" +
-                        ") " +
-                        "THEN CAST(1 AS BIT) " +
-                        "ELSE CAST(0 AS BIT) END ";
+                String sql_check_username = "SELECT * FROM REGISTRATION WHERE Username = " + "\'" + username + "\'";
+                String sql_check_email = "SELECT * FROM REGISTRATION WHERE Email = " + "\'" + email + "\'";
 
                 //update the values for existance checking
-                checkgetEmail = Select.CheckEntry("test.db",sql_email_check);
-                checkgetUsername = Select.CheckEntry("test.db",sql_username_check);
+                checkgetEmail = Select.CheckEntry("test.db",sql_check_email);
+                checkgetUsername = Select.CheckEntry("test.db",sql_check_username);
 
 
                 String parameterList = "FirstName, LastName, Email, Username, Password";
 
-                String valueList = "" + FirstNameTextField +", "+ LastNameTextField+", "+EmailTextField+", " +
-                                        UsernameTextField+", " + password_hashed;
+                String valueList = "\'" + firstname + "\'" +", "+ "\'" + lastname + "\'"+", "+"\'" + email + "\'"+", " +
+                        "\'" + username + "\'"+", " + "\'" + password_hash + "\'";;
 
-                if(checkgetEmail.equals("0") && checkgetUsername.equals("0")) {
+                System.out.println(valueList);
+                System.out.println(checkgetEmail);
+
+                if(checkgetEmail.equals("0") || checkgetUsername.equals("0")) {
                     Insert.Insert("test.db","REGISTRATION",parameterList,valueList);
                     FirstNameTextField.setText("ACCOUNT CREATED");
                 }
@@ -118,19 +108,20 @@ public class RegistrationPage extends JDialog {
 
     private void onOK() {
         // add your code here
-        dispose();
+       dispose();
     }
 
     private void onCancel() {
 
         dispose();
+
     }
 
-    public static void Registration() {
+    public void Registration() {
         RegistrationPage dialog = new RegistrationPage();
         dialog.pack();
         dialog.setTitle("Register Form");
+        dialog.setSize(230,300);
         dialog.setVisible(true);
-        System.exit(0);
     }
 }
