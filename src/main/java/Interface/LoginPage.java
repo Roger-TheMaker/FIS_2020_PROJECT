@@ -46,8 +46,9 @@ public class LoginPage extends JDialog {
 
         LoginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String checkUsernameEmail = "";
+                String checkUsername = "";
                 String checkPassword = "";
+                String checkEmail = "";
                 char[] password = PasswordTextField.getPassword();
                 String password_hashed = MD5.getMd5(String.valueOf(password));
 
@@ -58,14 +59,19 @@ public class LoginPage extends JDialog {
                 CreateTable.CreateTable("test.db","REGISTRATION",tableContent);
 
 
-                String sql_check_usernameEmail = "SELECT * FROM REGISTRATION WHERE Username = " + "\'" + UsernameEmailTextField.getText() + "\'";
+                String sql_check_username = "SELECT * FROM REGISTRATION WHERE Username = " + "\'" + UsernameEmailTextField.getText() + "\'";
+                String sql_check_email = "SELECT * FROM REGISTRATION WHERE Email = " + "\'" + UsernameEmailTextField.getText() + "\'";
                 String sql_check_password = "SELECT * FROM REGISTRATION WHERE Password = " + "\'" + password_hashed + "\'";
 
                 //update the values for existance checking
-                checkUsernameEmail = Select.CheckEntry("test.db",sql_check_usernameEmail);
+                checkUsername = Select.CheckEntry("test.db",sql_check_username);
                 checkPassword = Select.CheckEntry("test.db",sql_check_password);
+                checkEmail = Select.CheckEntry("test.db",sql_check_email);
 
-                if(checkUsernameEmail.equals("0") || checkPassword.equals("0"))
+                if((checkEmail.equals("1") || checkUsername.equals("1")) && checkPassword.equals("1")  ) {
+                    System.out.println("LOGAT BAZAT SMECHERAT");
+                }
+                else
                     UsernameEmailTextField.setText("INVALID USERNAME OR PASSWORD");
 
 
