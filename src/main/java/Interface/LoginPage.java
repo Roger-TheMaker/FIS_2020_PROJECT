@@ -74,7 +74,8 @@ public class LoginPage extends JDialog {
         });
         RegisterButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                RegistrationPage.Registration();
+                RegistrationPage registrationPage = new RegistrationPage();
+                registrationPage.Registration();
             }
         });
     }
@@ -92,6 +93,7 @@ public class LoginPage extends JDialog {
         LoginPage dialog = new LoginPage();
         dialog.pack();
         dialog.setTitle("Login");
+        dialog.setSize(200,200);
         dialog.setVisible(true);
         System.exit(0);
     }

@@ -105,19 +105,20 @@ public class RegistrationPage extends JDialog {
 
     private void onOK() {
         // add your code here
-        dispose();
+       dispose();
     }
 
     private void onCancel() {
 
         dispose();
+
     }
 
-    public static void Registration() {
+    public void Registration() {
         RegistrationPage dialog = new RegistrationPage();
         dialog.pack();
         dialog.setTitle("Register Form");
+        dialog.setSize(230,300);
         dialog.setVisible(true);
-        System.exit(0);
     }
 }
