@@ -1,7 +1,4 @@
-import Encryption.MD5;
 import Interface.LoginPage;
-import Interface.RegistrationPage;
-import SQLite.CreateTable;
 
 public class Main {
 
