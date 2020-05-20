@@ -1,10 +1,11 @@
 package Interface;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Volunteer_Page extends  JDialog {
+public class Volunteer_Page extends JDialog {
 
     private JPanel contentPane;
     private JPanel buttons_Panel;
@@ -12,14 +13,18 @@ public class Volunteer_Page extends  JDialog {
     private JButton AddButton;
     private JButton V_Button;
     private JTextField welcomeSummonerTextField;
-    private JTextField announcementsTextField;
     private JButton buttonOK;
     private JButton buttonCancel;
+
 
     public Volunteer_Page(){
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+
+        contentPane =new JPanel();
+
+        posts_Panel.setLayout(new FlowLayout());
 
 
         V_Button.addActionListener(new ActionListener() {
@@ -30,6 +35,25 @@ public class Volunteer_Page extends  JDialog {
         AddButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
+
+                //welcomeSummonerTextField.setText("Welcome Summoner");
+                //String summoner = welcomeSummonerTextField.getText();
+
+                JTextField text =new JTextField("Text");
+                text.setPreferredSize( new Dimension( 320, 26) );
+
+                JTextField username =new JTextField("Username");
+                username.setPreferredSize( new Dimension( 80, 26) );
+
+
+                JButton b = new JButton("Respond Post");
+                b.setBounds(500, 500, 100, 20);
+                posts_Panel.add(username);
+                posts_Panel.add(text);
+                posts_Panel.add(b);
+
+                posts_Panel.revalidate();;
+                posts_Panel.validate();
 
             }
         });
