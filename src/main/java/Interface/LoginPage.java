@@ -24,15 +24,8 @@ public class LoginPage extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-
-
-
-
-
         UsernameEmailTextField.setText("Username / Email");
         PasswordTextField.setText("password");
-
-
 
 
         // call onCancel()
@@ -79,6 +72,7 @@ public class LoginPage extends JDialog {
                 if((checkEmail.equals("1") || checkUsername.equals("1")) && checkPassword.equals("1")  ) {
 
                     loginStatus = 1;
+                    UserService.user = UsernameEmailTextField.getText();
                     onCancel();
                 }
                 else {
@@ -108,6 +102,7 @@ public class LoginPage extends JDialog {
     public static int getLoginStatus() {
         return loginStatus;
     }
+
 
     public static void Login() {
         LoginPage dialog = new LoginPage();
