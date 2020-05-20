@@ -15,7 +15,7 @@ public class Volunteer_Page extends JDialog {
     private JTextField welcomeSummonerTextField;
     private JButton buttonOK;
     private JButton buttonCancel;
-    //MAI VEDEM DACA ADAUGAM SI UN MESAJ SUS CU ANNOUNCEMENTS
+
 
     public Volunteer_Page(){
         setContentPane(contentPane);
@@ -26,6 +26,7 @@ public class Volunteer_Page extends JDialog {
 
         posts_Panel.setLayout(new FlowLayout());
 
+
         V_Button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -35,11 +36,15 @@ public class Volunteer_Page extends JDialog {
             public void actionPerformed(ActionEvent e) {
 
 
+                //welcomeSummonerTextField.setText("Welcome Summoner");
+                //String summoner = welcomeSummonerTextField.getText();
+
                 JTextField text =new JTextField("Text");
                 text.setPreferredSize( new Dimension( 320, 26) );
 
                 JTextField username =new JTextField("Username");
                 username.setPreferredSize( new Dimension( 80, 26) );
+
 
                 JButton b = new JButton("Respond Post");
                 b.setBounds(500, 500, 100, 20);
@@ -50,7 +55,6 @@ public class Volunteer_Page extends JDialog {
                 posts_Panel.revalidate();;
                 posts_Panel.validate();
 
-                //aici salvam butonul in baza de date odata cu adaugarea pe interfata
             }
         });
     }
