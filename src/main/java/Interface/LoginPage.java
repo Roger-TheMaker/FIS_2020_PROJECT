@@ -1,9 +1,11 @@
 package Interface;
 
 import Encryption.MD5;
+import Network.Server;
 import SQLite.CreateTable;
 import SQLite.Select;
 
+import javax.security.auth.SubjectDomainCombiner;
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -15,6 +17,7 @@ public class LoginPage extends JDialog {
     private JButton RegisterButton;
     private JButton buttonOK;
     private JButton buttonCancel;
+    private static int loginStatus = 0;
 
     public LoginPage() {
         setContentPane(contentPane);
@@ -75,14 +78,12 @@ public class LoginPage extends JDialog {
 
                 if((checkEmail.equals("1") || checkUsername.equals("1")) && checkPassword.equals("1")  ) {
 
-                    System.out.println("Login successful");
-                    UserService.user=UsernameEmailTextField.getText();
-                    Volunteer_Page.Show();
-
+                    loginStatus = 1;
+                    onCancel();
                 }
-                else
+                else {
                     UsernameEmailTextField.setText("INVALID USERNAME OR PASSWORD");
-
+                }
 
 
             }
@@ -102,6 +103,10 @@ public class LoginPage extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+    }
+
+    public static int getLoginStatus() {
+        return loginStatus;
     }
 
     public static void Login() {
