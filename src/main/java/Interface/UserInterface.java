@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Volunteer_Page extends JDialog {
+public class UserInterface extends JDialog {
 
     private JPanel contentPane;
     private JPanel buttons_Panel;
@@ -24,7 +24,7 @@ public class Volunteer_Page extends JDialog {
     private JButton buttonCancel;
 
 
-    public Volunteer_Page(){
+    public UserInterface(){
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -64,12 +64,12 @@ public class Volunteer_Page extends JDialog {
 
                 String tableContent = "id integer PRIMARY KEY, USERNAME text NOT NULL, HELP_MESSAGE text NOT NULL ";
 
-                CreateTable.CreateTable("posts.db","POSTS",tableContent);
+                CreateTable.CreateTable("test.db","POSTS",tableContent);
 
 
                 String sql_check_name = "SELECT * FROM POSTS WHERE USERNAME = " + "\'" + name + "\'";
 
-                checkgetName = Select.CheckEntry("posts.db",sql_check_name);
+                checkgetName = Select.CheckEntry("test.db",sql_check_name);
 
 
                 String parameterList = "USERNAME, HELP_MESSAGE";
@@ -79,7 +79,7 @@ public class Volunteer_Page extends JDialog {
 
 
                 if(checkgetName.equals("0")) {
-                    Insert.Insert("posts.db","POSTS",parameterList,valueList);
+                    Insert.Insert("test.db","POSTS",parameterList,valueList);
                 }
 
 
@@ -104,9 +104,9 @@ public class Volunteer_Page extends JDialog {
         dispose();
     }
 
-    public static void Show() {
+    public static void UserInterface() {
         //maybe static, maybe not
-        Volunteer_Page p = new Volunteer_Page();
+        UserInterface p = new UserInterface();
         p.pack();
         p.setSize(800,600);
         p.setLocation(600,0);

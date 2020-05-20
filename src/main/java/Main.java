@@ -2,6 +2,7 @@ import Encryption.MD5;
 import Interface.ChatInterface;
 import Interface.LoginPage;
 import Interface.RegistrationPage;
+import Interface.UserInterface;
 import Network.Client;
 import Network.GetMyIP;
 import Network.Server;
@@ -17,7 +18,7 @@ public class Main {
             Server server = new Server();
             Thread thread = new Thread(server);
             thread.start();
-          //INTERFACE
+            UserInterface.UserInterface();
         }
     }
 }

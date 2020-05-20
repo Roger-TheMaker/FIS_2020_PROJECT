@@ -21,6 +21,8 @@ public class Select {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            Connect.closeConnection();
         }
 
         return null;
