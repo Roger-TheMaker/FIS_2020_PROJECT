@@ -8,7 +8,6 @@ import SQLite.Select;
 import javax.security.auth.SubjectDomainCombiner;
 import javax.swing.*;
 import java.awt.event.*;
-import java.lang.reflect.Type;
 
 public class LoginPage extends JDialog {
     private JPanel contentPane;
@@ -72,8 +71,10 @@ public class LoginPage extends JDialog {
                 checkEmail = Select.CheckEntry("test.db",sql_check_email);
 
                 if((checkEmail.equals("1") || checkUsername.equals("1")) && checkPassword.equals("1")  ) {
+
                     loginStatus = 1;
                     onCancel();
+
                 }
                 else {
                     UsernameEmailTextField.setText("INVALID USERNAME OR PASSWORD");
