@@ -1,5 +1,9 @@
 package Interface;
 
+import SQLite.CreateTable;
+import SQLite.Insert;
+import SQLite.Select;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +17,9 @@ public class Volunteer_Page extends JDialog {
     private JButton AddButton;
     private JButton V_Button;
     private JTextField welcomeSummonerTextField;
+
+    private JTextField add_Field;
+
     private JButton buttonOK;
     private JButton buttonCancel;
 
@@ -27,6 +34,9 @@ public class Volunteer_Page extends JDialog {
         posts_Panel.setLayout(new FlowLayout());
 
 
+        add_Field.setText("Write");
+
+
         V_Button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -35,19 +45,47 @@ public class Volunteer_Page extends JDialog {
         AddButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
+                String checkgetName = "1";
 
                 //welcomeSummonerTextField.setText("Welcome Summoner");
-                //String summoner = welcomeSummonerTextField.getText();
 
-                JTextField text =new JTextField("Text");
+                JTextField text = new JTextField("");
+                String help_message=add_Field.getText();
+                text.setText(help_message);
                 text.setPreferredSize( new Dimension( 320, 26) );
 
-                JTextField username =new JTextField("Username");
+
+                JTextField username =new JTextField("");
                 username.setPreferredSize( new Dimension( 80, 26) );
+                String name =UserService.user;
+                username.setText(name);
+
+
+
+                String tableContent = "id integer PRIMARY KEY, USERNAME text NOT NULL, HELP_MESSAGE text NOT NULL ";
+
+                CreateTable.CreateTable("posts.db","POSTS",tableContent);
+
+
+                String sql_check_name = "SELECT * FROM POSTS WHERE USERNAME = " + "\'" + name + "\'";
+
+                checkgetName = Select.CheckEntry("posts.db",sql_check_name);
+
+
+                String parameterList = "USERNAME, HELP_MESSAGE";
+                String valueList = "\'" + name + "\'" +", "+ "\'" + help_message + "\'";
+
+                System.out.println(valueList);
+
+
+                if(checkgetName.equals("0")) {
+                    Insert.Insert("posts.db","POSTS",parameterList,valueList);
+                }
 
 
                 JButton b = new JButton("Respond Post");
                 b.setBounds(500, 500, 100, 20);
+
                 posts_Panel.add(username);
                 posts_Panel.add(text);
                 posts_Panel.add(b);

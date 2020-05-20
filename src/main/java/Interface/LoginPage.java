@@ -21,13 +21,19 @@ public class LoginPage extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
+
+
+
+
+
         UsernameEmailTextField.setText("Username / Email");
         PasswordTextField.setText("password");
 
 
 
 
-        // call onCancel() when cross is clicked
+        // call onCancel()
+        // when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -70,6 +76,7 @@ public class LoginPage extends JDialog {
                 if((checkEmail.equals("1") || checkUsername.equals("1")) && checkPassword.equals("1")  ) {
 
                     System.out.println("Login successful");
+                    UserService.user=UsernameEmailTextField.getText();
                     Volunteer_Page.Show();
 
                 }
