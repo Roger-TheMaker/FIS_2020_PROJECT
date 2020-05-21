@@ -59,12 +59,6 @@ public class UserInterface extends JDialog {
         });
         thread.start();
 
-
-        V_Button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
         AddButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             addPost();
