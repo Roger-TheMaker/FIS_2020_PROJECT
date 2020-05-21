@@ -13,7 +13,7 @@ public class Client implements Generic {
     private static int connectionStatus = 0;
     private static int port = 6666;
 
-    public static void connect(String address, int port) {
+    public void connect(String address, int port) {
         // establish a connection
         try{
             socket = new Socket(address,port);

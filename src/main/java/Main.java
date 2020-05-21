@@ -5,6 +5,7 @@ import Interface.RegistrationPage;
 import Interface.UserInterface;
 import Network.Client;
 import Network.GetMyIP;
+import Network.GetMyIPLocal;
 import Network.Server;
 import SQLite.CreateTable;
 
@@ -12,7 +13,7 @@ import SQLite.CreateTable;
 public class Main {
 
     public static void main(String[] args) {
-        LoginPage.Login();
+       LoginPage.Login();
 
         if( LoginPage.getLoginStatus() == 1 ) {
             Server server = new Server();
