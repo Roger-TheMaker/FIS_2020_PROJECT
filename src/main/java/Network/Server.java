@@ -39,6 +39,16 @@ public class Server implements Runnable, Generic{
 
     }
 
+    public void closeSocket() {
+        try {
+
+            server.close();
+
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String receiveMessage() {
         try {
             return(String)input.readUTF();
