@@ -1,6 +1,8 @@
 package Interface;
 
+import Network.Client;
 import Network.GetMyIPLocal;
+import Network.Server;
 import SQLite.CreateTable;
 import SQLite.Insert;
 import SQLite.Select;
@@ -30,6 +32,11 @@ public class UserInterface extends JDialog {
         contentPane =new JPanel();
         posts_Panel.setLayout(new FlowLayout());
         PostTextField.setText("Write Something...");
+
+        String tableContent = "id integer PRIMARY KEY, USERNAME text NOT NULL, HELP_MESSAGE text NOT NULL, IP_ADDRESS text NOT NULL ";
+        CreateTable.CreateTable("test.db","POSTS",tableContent);
+
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -73,10 +80,6 @@ public class UserInterface extends JDialog {
     private void addPost() {
         String IPAddress = GetMyIPLocal.getMyIPLocal();
         String post =  PostTextField.getText();
-
-        String tableContent = "id integer PRIMARY KEY, USERNAME text NOT NULL, HELP_MESSAGE text NOT NULL, IP_ADDRESS text NOT NULL ";
-
-        CreateTable.CreateTable("test.db","POSTS",tableContent);
         String parameterList = "USERNAME, HELP_MESSAGE, IP_ADDRESS";
         String valueList = "\'" + UserService.user + "\', " + "\'" + post + "\', " + "\'" + IPAddress + "\'";
 
@@ -106,7 +109,13 @@ public class UserInterface extends JDialog {
         RespondButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TO DO
+                Server server = new Server();
+                server.closeSocket();
+
+                Client client = new Client();
+                client.connect(ipAddress,55666);
+
+                ChatInterface.ChatBox(client);
             }
         });
 
@@ -123,7 +132,6 @@ public class UserInterface extends JDialog {
 
 
     public static void UserInterface() {
-        //maybe static, maybe not
         UserInterface p = new UserInterface();
         p.pack();
         p.setSize(800,600);
