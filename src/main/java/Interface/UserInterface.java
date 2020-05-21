@@ -104,7 +104,7 @@ public class UserInterface extends JDialog {
         usernameTextField.setText( UserService.user);
 
 
-        JButton RespondButton = new JButton("Respond Post");
+        JButton RespondButton = new JButton("Respond Announcement");
         RespondButton.setBounds(500, 500, 100, 20);
         RespondButton.addActionListener(new ActionListener() {
             @Override
