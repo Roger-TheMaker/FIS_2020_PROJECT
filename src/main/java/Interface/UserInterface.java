@@ -106,6 +106,8 @@ public class UserInterface extends JDialog {
 
         JButton RespondButton = new JButton("Respond Announcement");
         RespondButton.setBounds(500, 500, 100, 20);
+
+        //Implementation
         RespondButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
