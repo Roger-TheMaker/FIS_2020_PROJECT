@@ -21,6 +21,8 @@ public class UserInterface extends JDialog {
     private JButton V_Button;
     private JTextField welcomeSummonerTextField;
     private JTextField PostTextField;
+    private JButton deleteButton;
+    private JTextField DeleteTextField;
     private JButton buttonOK;
     private JButton buttonCancel;
     private int RowID = 1;
@@ -32,6 +34,7 @@ public class UserInterface extends JDialog {
         contentPane =new JPanel();
         posts_Panel.setLayout(new FlowLayout());
         PostTextField.setText("Write Something...");
+        DeleteTextField.setText("Delete Something...");
 
         String tableContent = "id integer PRIMARY KEY, USERNAME text NOT NULL, HELP_MESSAGE text NOT NULL, IP_ADDRESS text NOT NULL ";
         CreateTable.CreateTable("test.db","POSTS",tableContent);
@@ -66,6 +69,14 @@ public class UserInterface extends JDialog {
             public void actionPerformed(ActionEvent e) {
             addPost();
 
+            }
+        });
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String text = DeleteTextField.getText();
+                //Delete.delete("test.db", text);
             }
         });
     }
