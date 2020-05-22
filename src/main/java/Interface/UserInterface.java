@@ -4,6 +4,7 @@ import Network.Client;
 import Network.GetMyIPLocal;
 import Network.Server;
 import SQLite.CreateTable;
+import SQLite.Delete;
 import SQLite.Insert;
 import SQLite.Select;
 
@@ -70,7 +71,9 @@ public class UserInterface extends JDialog {
             public void actionPerformed(ActionEvent e) {
 
                 String text = DeleteTextField.getText();
-                //Delete.delete("test.db", text);
+                String sql= "DELETE FROM POSTS WHERE HELP_MESSAGE = " + "\'" + text+ "\'";
+
+                Delete.delete("test.db", sql);
             }
         });
     }
