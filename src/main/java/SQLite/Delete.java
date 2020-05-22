@@ -6,9 +6,8 @@ import java.sql.Statement;
 
 public class Delete {
 
-    public static void delete(String nameDB, String item_for_deletion){
+    public static void delete(String nameDB , String sql_command){
         Connection conn = Connect.connect(nameDB);
-        String sql_command = "DELETE FROM POSTS WHERE HELP_MESSAGE = " + item_for_deletion;
 
         try {
             Statement stmt = conn.createStatement();
