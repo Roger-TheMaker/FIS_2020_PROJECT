@@ -3,10 +3,7 @@ package Interface;
 import Network.Client;
 import Network.GetMyIPLocal;
 import Network.Server;
-import SQLite.CreateTable;
-import SQLite.Delete;
-import SQLite.Insert;
-import SQLite.Select;
+import SQLite.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,11 +16,11 @@ public class UserInterface extends JDialog {
     private JPanel buttons_Panel;
     private JPanel posts_Panel;
     private JButton AddButton;
-    private JButton V_Button;
     private JTextField welcomeSummonerTextField;
     private JTextField PostTextField;
     private JButton deleteButton;
     private JTextField DeleteTextField;
+    private JButton activateUrgencyModeButton;
     private JButton buttonOK;
     private JButton buttonCancel;
     private int RowID = 1;
@@ -32,7 +29,6 @@ public class UserInterface extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        contentPane =new JPanel();
         posts_Panel.setLayout(new FlowLayout());
         PostTextField.setText("Write Something...");
         DeleteTextField.setText("Delete Something...");
@@ -74,6 +70,21 @@ public class UserInterface extends JDialog {
                 String sql= "DELETE FROM POSTS WHERE HELP_MESSAGE = " + "\'" + text+ "\'";
 
                 Delete.delete("test.db", sql);
+            }
+        });
+        activateUrgencyModeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                //String sql= "UPDATE POSTS SET HELP_MESSAGE = (SELECT * FROM POSTS WHERE HELP_MESSAGE  IS NOT NULL )";
+                String sql= "UPDATE POSTS SET HELP_MESSAGE = HELP_MESSAGE "  + " \'\" + text + \"\'  " ;
+                //greu cu updade ul de mesaj ... subqueries
+                //nu cred ca se poate asa ceva
+
+                //cel mai bine, facem acest lucru pentru o singura postare, doar oare cu o noua casuta ? 
+                Update.update("test.db", sql);
+                System.out.println("Posts Updated\n");
             }
         });
     }

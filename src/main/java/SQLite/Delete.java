@@ -6,8 +6,10 @@ import java.sql.Statement;
 
 public class Delete {
 
-    public static void delete(String nameDB , String sql_command){
+    public static void delete(String nameDB , String text){
         Connection conn = Connect.connect(nameDB);
+
+        String sql_command= "DELETE FROM POSTS WHERE HELP_MESSAGE = " + "\'" + text+ "\'";
 
         try {
             Statement stmt = conn.createStatement();
