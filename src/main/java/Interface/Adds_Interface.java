@@ -1,13 +1,13 @@
 package Interface;
 
-import Network.Client;
-import Network.Server;
 import SQLite.Select;
+import SQLite.Update;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 public class Adds_Interface extends JDialog{
     private JPanel contentPanel;
@@ -45,9 +45,13 @@ public class Adds_Interface extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                Update.update("test.db");
+                System.out.println("Posts Updated\n");
             }
         });
     }
+
+
     private void onOK() {
         dispose();
     }
@@ -56,13 +60,14 @@ public class Adds_Interface extends JDialog{
     }
 
 
-    private void printPost(String usrname, String post, String ipAddress) {
-        if(usrname == null || post == null || ipAddress == null)
+    private void printPost(String username, String post, String ipAddress) {
+        if(username == null || post == null || ipAddress == null)
             return;
+
 
         JTextField PostTextField = new JTextField("");
         String help_message= post;
-        String useername = usrname;
+        String useername = username;
         PostTextField.setText(help_message);
         PostTextField.setPreferredSize( new Dimension( 320, 26) );
 
@@ -71,27 +76,22 @@ public class Adds_Interface extends JDialog{
         usernameTextField.setText( UserService.user);
 
 
-        JButton RespondButton = new JButton("Respond Announcement");
-        RespondButton.setBounds(500, 500, 100, 20);
-
         JCheckBox checkBox= new JCheckBox("Urgency");
 
-        //Implementation
-        RespondButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Server server = new Server();
-                server.closeSocket();
+        /*
+        if(checkBox.isSelected()) {
+            System.out.println("Hei");
+            PostTextField.setText("Hello");
+        }
 
-                Client client = new Client();
-                client.connect(ipAddress,55666);
+        Font f = null;
+        f=new Font("Serif",Font.BOLD + Font.ITALIC, 14);
+        if(checkBox.isSelected())
+            PostTextField.setFont(f);
+        */
 
-                ChatInterface.ChatBox(client);
-            }
-        });
         posts.add(usernameTextField);
         posts.add(PostTextField);
-        posts.add(RespondButton);
         posts.add(checkBox);
 
         posts.revalidate();;
@@ -104,7 +104,7 @@ public class Adds_Interface extends JDialog{
         Adds_Interface dialog = new Adds_Interface();
         dialog.pack();
         dialog.setTitle("Announcements");
-        dialog.setSize(800,600);
+        dialog.setSize(600,600);
         dialog.setVisible(true);
     }
 
