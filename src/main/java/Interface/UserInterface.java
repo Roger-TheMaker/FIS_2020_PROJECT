@@ -20,6 +20,7 @@ public class UserInterface extends JDialog {
     private JTextField PostTextField;
     private JButton deleteButton;
     private JTextField DeleteTextField;
+    private JButton updateAnnouncemetsButton;
     private JButton activateUrgencyModeButton;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -67,26 +68,21 @@ public class UserInterface extends JDialog {
             public void actionPerformed(ActionEvent e) {
 
                 String text = DeleteTextField.getText();
-                String sql= "DELETE FROM POSTS WHERE HELP_MESSAGE = " + "\'" + text+ "\'";
-
-                Delete.delete("test.db", sql);
+                Delete.delete("test.db", text);
+                System.out.println(text+ " deleted");
             }
         });
-        activateUrgencyModeButton.addActionListener(new ActionListener() {
+
+
+        updateAnnouncemetsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                Adds_Interface.Display();
 
-                //String sql= "UPDATE POSTS SET HELP_MESSAGE = (SELECT * FROM POSTS WHERE HELP_MESSAGE  IS NOT NULL )";
-                String sql= "UPDATE POSTS SET HELP_MESSAGE = HELP_MESSAGE "  + " \'\" + text + \"\'  " ;
-                //greu cu updade ul de mesaj ... subqueries
-                //nu cred ca se poate asa ceva
-
-                //cel mai bine, facem acest lucru pentru o singura postare, doar oare cu o noua casuta ? 
-                Update.update("test.db", sql);
-                System.out.println("Posts Updated\n");
             }
         });
+
     }
 
     private void onOK() {
@@ -126,6 +122,8 @@ public class UserInterface extends JDialog {
         JButton RespondButton = new JButton("Respond Announcement");
         RespondButton.setBounds(500, 500, 100, 20);
 
+        JCheckBox checkbox=new JCheckBox("Urgency");
+
         //Implementation
         RespondButton.addActionListener(new ActionListener() {
             @Override
@@ -156,7 +154,7 @@ public class UserInterface extends JDialog {
         UserInterface p = new UserInterface();
         p.pack();
         p.setSize(800,600);
-        p.setLocation(600,0);
+        p.setLocation(800,0);
         p.setVisible(true);
     }
 }
