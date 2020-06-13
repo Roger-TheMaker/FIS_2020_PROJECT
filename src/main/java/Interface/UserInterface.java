@@ -1,8 +1,6 @@
 package Interface;
 
-import Network.Client;
-import Network.GetMyIPLocal;
-import Network.Server;
+import Network.*;
 import SQLite.CreateTable;
 import SQLite.Insert;
 import SQLite.Select;
@@ -21,6 +19,7 @@ public class UserInterface extends JDialog {
     private JButton V_Button;
     private JTextField welcomeSummonerTextField;
     private JTextField PostTextField;
+    private JScrollPane PostBox;
     private JButton buttonOK;
     private JButton buttonCancel;
     private int RowID = 1;
@@ -33,7 +32,7 @@ public class UserInterface extends JDialog {
         posts_Panel.setLayout(new FlowLayout());
         PostTextField.setText("Write Something...");
 
-        String tableContent = "id integer PRIMARY KEY, USERNAME text NOT NULL, HELP_MESSAGE text NOT NULL, IP_ADDRESS text NOT NULL ";
+        String tableContent = "id integer PRIMARY KEY, USERNAME text NOT NULL, HELP_MESSAGE text NOT NULL, IP_ADDRESS text NOT NULL, UNIQUE(USERNAME, HELP_MESSAGE) ";
         CreateTable.CreateTable("test.db","POSTS",tableContent);
 
 
@@ -64,7 +63,15 @@ public class UserInterface extends JDialog {
         });
         AddButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            addPost();
+                String message = addPost();
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        BroadcastClient.sendBroadcast(message);
+                    }
+                });
+                thread.start();
 
             }
         });
@@ -77,7 +84,7 @@ public class UserInterface extends JDialog {
         dispose();
     }
 
-    private void addPost() {
+    private String addPost() {
         String IPAddress = GetMyIPLocal.getMyIPLocal();
         String post =  PostTextField.getText();
         String parameterList = "USERNAME, HELP_MESSAGE, IP_ADDRESS";
@@ -86,6 +93,8 @@ public class UserInterface extends JDialog {
         System.out.println(valueList);
 
         Insert.Insert("test.db","POSTS",parameterList,valueList);
+
+        return valueList;
 
     }
 
@@ -101,7 +110,7 @@ public class UserInterface extends JDialog {
 
         JTextField usernameTextField =new JTextField("");
         usernameTextField.setPreferredSize( new Dimension( 80, 26) );
-        usernameTextField.setText( UserService.user);
+            usernameTextField.setText( UserService.user);
 
 
         JButton RespondButton = new JButton("Respond Post");
