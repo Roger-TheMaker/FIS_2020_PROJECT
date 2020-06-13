@@ -11,7 +11,7 @@ public class Server implements Runnable, Generic{
     private static DataInputStream input = null;
     private static DataOutputStream out = null;
     private static int connectionStatus = 0;
-    private static int port = 6666;
+    private static int port = 55666;
 
     public void run() {
 
@@ -25,6 +25,8 @@ public class Server implements Runnable, Generic{
             ChatInterface.ChatBox(this);
 
         }catch(Exception e){System.out.println(e);
+        } finally {
+            System.out.println("EXITED BRO");
         }
     }
 

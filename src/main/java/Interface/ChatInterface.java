@@ -38,9 +38,6 @@ public class ChatInterface extends JDialog {
                 ConnectionOption.sendMessage("NAME has left the chat");
                 ConnectionOption.closeConnection();
 
-                Server server = new Server();
-                Thread thread = new Thread(server);
-                thread.start();
 
                 onCancel();
             }
