@@ -7,10 +7,11 @@ public class Select {
 
     public static String CheckEntry(String nameDB, String sql_command) {
         Connection conn = Connect.connect(nameDB);
+        ResultSet rs = null;
         String result = "";
         try {
             PreparedStatement pstmt  = conn.prepareStatement(sql_command);
-            ResultSet rs = pstmt.executeQuery();
+            rs = pstmt.executeQuery();
 
             if(rs.next()) {
 
@@ -19,10 +20,17 @@ public class Select {
             else
                 return "0";
 
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             Connect.closeConnection();
+            try {
+
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return null;

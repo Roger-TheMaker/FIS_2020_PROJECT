@@ -82,8 +82,8 @@ public class UserInterface extends JDialog {
         });
         AddButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String message = "MESSAGE"+addPost();
-                BroadcastClient.run(message);
+                String message = "MESSAGE"+addPost(UserService.user);
+               BroadcastClient.run(message);
 
 
 
@@ -112,15 +112,15 @@ public class UserInterface extends JDialog {
         dispose();
     }
 
-    private String addPost() {
+    private String addPost(String Username) {
         String IPAddress = GetMyIPLocal.getMyIPLocal();
         String post =  PostTextField.getText();
         String parameterList = "USERNAME, HELP_MESSAGE, IP_ADDRESS";
-        String valueList = "\'" + UserService.user + "\', " + "\'" + post + "\', " + "\'" + IPAddress + "\'";
+        String valueList = "\'" + Username + "\', " + "\'" + post + "\', " + "\'" + IPAddress + "\'";
 
         System.out.println(valueList);
 
-        //   Insert.Insert("test.db","POSTS",parameterList,valueList);
+     //   Insert.Insert("test.db","POSTS",parameterList,valueList);
 
         return valueList;
 
@@ -143,8 +143,8 @@ public class UserInterface extends JDialog {
         for(int i = 0; i < post.size(); i++) {
             for(Object obj : post.get(i)) {
                 if(obj instanceof JTextField && ((JTextField) obj).getText().equals(UserService.user)) {
-                    removeComponent(post.get(i));
-                    break;
+                   removeComponent(post.get(i));
+                   break;
                 }
 
             }
@@ -173,24 +173,30 @@ public class UserInterface extends JDialog {
 
         JTextField usernameTextField =new JTextField("");
         usernameTextField.setPreferredSize( new Dimension( 80, 26) );
-        usernameTextField.setText( UserService.user);
+            usernameTextField.setText( UserService.user);
 
 
         JButton RespondButton = new JButton("Respond Post");
         this.post.add(Triplet.with(usernameTextField,PostTextField,RespondButton));
-        RespondButton.setBounds(500, 500, 100, 20);
-        RespondButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Server server = new Server();
-                server.closeSocket();
 
-                Client client = new Client();
-                client.connect(ipAddress,55666);
 
-                ChatInterface.ChatBox(client);
-            }
-        });
+            RespondButton.setBounds(500, 500, 100, 20);
+            RespondButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println(GetMyIPLocal.getMyIPLocal());
+                    System.out.println(ipAddress);
+
+                        Server server = new Server();
+                        server.closeSocket();
+
+                        Client client = new Client();
+                        System.out.println(ipAddress);
+                        client.connect(ipAddress, 55666);
+                        ChatInterface_V2.Chat(client);
+
+                }
+            });
 
         posts_Panel.add(usernameTextField);
         posts_Panel.add(PostTextField);

@@ -3,18 +3,19 @@ package Network;
 import java.io.IOException;
 import java.net.*;
 import java.util.Enumeration;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BroadcastClient {
     public static DatagramSocket c = null;
     private static String message;
+
 
     public static void run(String message) {
         try {
             c = new DatagramSocket();
             c.setBroadcast(true);
             System.out.println("SENDING MESSAGE");
-
             byte[] sendData = message.getBytes();
 
             try {
@@ -22,7 +23,6 @@ public class BroadcastClient {
                 c.send(sendPacket);
             } catch (Exception e) {
             }
-
             Enumeration interfaces = NetworkInterface.getNetworkInterfaces();
             while (interfaces.hasMoreElements()) {
                 NetworkInterface networkInterface = (NetworkInterface) interfaces.nextElement();
@@ -46,8 +46,8 @@ public class BroadcastClient {
                 }
             }
             byte[] recvBuf = new byte[15000];
-           // DatagramPacket receivePacket = new DatagramPacket(recvBuf, recvBuf.length);
-            // c.receive(receivePacket);
+          //  DatagramPacket receivePacket = new DatagramPacket(recvBuf, recvBuf.length);
+       //     c.receive(receivePacket);
             c.close();
             System.out.println("MESSAGE HAS BEEN SENT");
 
@@ -57,4 +57,7 @@ public class BroadcastClient {
             return;
         }
     }
+
+
+
 }

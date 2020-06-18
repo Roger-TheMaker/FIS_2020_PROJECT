@@ -32,7 +32,20 @@ public class Client implements Generic {
             out.flush();
 
         } catch (IOException e) {
-            closeConnection();
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void closeSocket() {
+        try {
+            socket.close();
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }

@@ -11,6 +11,7 @@ public class Insert {
         try {
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql_command);
+            stmt.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

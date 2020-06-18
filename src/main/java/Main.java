@@ -13,7 +13,7 @@ import java.net.UnknownHostException;
 public class Main {
 
     public static void main(String[] args) {
-         LoginPage.Login();
+       LoginPage.Login();
 
         if( LoginPage.getLoginStatus() == 1 ) {
 
@@ -27,7 +27,6 @@ public class Main {
 
             UserInterface.UserInterface();
         }
-
 
 
     }

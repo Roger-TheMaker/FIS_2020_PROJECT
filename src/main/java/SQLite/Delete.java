@@ -2,6 +2,7 @@ package SQLite;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Delete {
@@ -11,10 +12,12 @@ public class Delete {
         try {
             PreparedStatement pstmt  = conn.prepareStatement(sql_command);
             pstmt.executeUpdate();
+            pstmt.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+
             Connect.closeConnection();
         }
     }
