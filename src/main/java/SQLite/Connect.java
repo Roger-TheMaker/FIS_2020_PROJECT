@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class Connect {
     private static Connection conn = null;
 
-    public static Connection connect(String nameDB) {
+    public synchronized static Connection connect(String nameDB) {
 
         try {
             // db parameters
@@ -27,7 +27,7 @@ public class Connect {
         return null;
     }
 
-    public static void closeConnection() {
+    public synchronized static void closeConnection() {
         try {
             if (conn != null) {
                 conn.close();

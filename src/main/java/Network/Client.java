@@ -11,7 +11,7 @@ public class Client implements Generic {
     private static DataInputStream input = null;
     private static DataOutputStream out = null;
     private static int connectionStatus = 0;
-    private static int port = 6666;
+    private static int port = 55666;
 
     public void connect(String address, int port) {
         // establish a connection
@@ -39,14 +39,6 @@ public class Client implements Generic {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    public void closeSocket() {
-        try {
-            socket.close();
-        } catch(IOException e) {
-            e.printStackTrace();
         }
     }
 

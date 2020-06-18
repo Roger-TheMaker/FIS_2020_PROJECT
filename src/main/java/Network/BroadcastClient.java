@@ -1,5 +1,5 @@
 package Network;
-
+/*
 import java.io.IOException;
 import java.net.*;
 import java.util.Enumeration;
@@ -19,7 +19,7 @@ public class BroadcastClient {
             byte[] sendData = message.getBytes();
 
             try {
-                DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName("192.168.1.255"), 8888);
+                DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName("192.168.1.255"), 54123);
                 c.send(sendPacket);
             } catch (Exception e) {
             }
@@ -38,7 +38,7 @@ public class BroadcastClient {
                     }
 
                     try {
-                        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, broadcast, 8888);
+                        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, broadcast, 54123);
                         c.send(sendPacket);
                         System.out.println("PACKET SENT");
                     } catch (Exception e) {
@@ -59,5 +59,30 @@ public class BroadcastClient {
     }
 
 
+
+}
+*/
+import java.net.DatagramPacket;
+        import java.net.DatagramSocket;
+        import java.net.InetAddress;
+
+public class BroadcastClient {
+
+    public static void run(String message) {
+
+        try {
+
+            DatagramSocket socket = new DatagramSocket();
+            socket.setBroadcast(true);
+
+            byte[] buffer = message.getBytes();
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName("192.168.1.255"), 61000);
+            socket.send(packet);
+
+        }catch(Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
 
 }

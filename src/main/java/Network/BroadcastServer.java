@@ -18,7 +18,7 @@ public class BroadcastServer implements Runnable {
     @Override
     public void run() {
         try {
-            socket = new DatagramSocket(8888, InetAddress.getByName("0.0.0.0"));
+            socket = new DatagramSocket(61000, InetAddress.getByName("0.0.0.0"));
             socket.setBroadcast(true);
 
             while (true) {
@@ -45,7 +45,7 @@ public class BroadcastServer implements Runnable {
                     System.out.println("POST DELETED");
                     UserInterface.RowID = 1;
                 }
-                System.out.println(getClass().getName() + ">>>Packet received; data: " + new String(message));
+              //  System.out.println(getClass().getName() + ">>>Packet received; data: " + new String(message));
             }
         } catch (IOException ex) {
             Logger.getLogger(DiscoveryThread.class.getName()).log(Level.SEVERE, null, ex);

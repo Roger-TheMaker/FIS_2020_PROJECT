@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class Insert {
 
-    public static void Insert(String nameDB,String tableName, String parameterList, String values) {
+    public synchronized static void Insert(String nameDB,String tableName, String parameterList, String values) {
         Connection conn = Connect.connect(nameDB);
         String sql_command = "INSERT INTO " + tableName + " (" + parameterList + ") " + "VALUES " + "(" + values + " ); ";
 
