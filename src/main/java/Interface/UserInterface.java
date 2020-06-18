@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Logger;
 
 public class UserInterface extends JDialog {
 
@@ -45,11 +46,9 @@ public class UserInterface extends JDialog {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    semaphore.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                long threadId = Thread.currentThread().getId();
+             System.out.println(threadId);
+
                 while(true) {
                     //Row[0] = username
                     //Row[1] = post
@@ -66,8 +65,6 @@ public class UserInterface extends JDialog {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                    } finally {
-                        semaphore.release();
                     }
                 }
             }
@@ -173,7 +170,7 @@ public class UserInterface extends JDialog {
 
         JTextField usernameTextField =new JTextField("");
         usernameTextField.setPreferredSize( new Dimension( 80, 26) );
-            usernameTextField.setText( UserService.user);
+            usernameTextField.setText( username);
 
 
         JButton RespondButton = new JButton("Respond Post");

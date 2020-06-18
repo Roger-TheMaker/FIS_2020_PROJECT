@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class Select {
 
-    public static String CheckEntry(String nameDB, String sql_command) {
+    public synchronized static String CheckEntry(String nameDB, String sql_command) {
         Connection conn = Connect.connect(nameDB);
         ResultSet rs = null;
         String result = "";
@@ -36,7 +36,7 @@ public class Select {
         return null;
     }
 
-    public static String IPAddress(String nameDB, String sql_command) {
+    public  static String IPAddress(String nameDB, String sql_command) {
         Connection conn = Connect.connect(nameDB);
         String ip = "";
         try {
@@ -58,14 +58,16 @@ public class Select {
         return ip;
     }
 
-    public static String[] getRow(String nameDB, String sql_command) {
+    public synchronized static String[] getRow(String nameDB, String sql_command) {
         Connection conn = Connect.connect(nameDB);
+        Statement stmt = null;
+        ResultSet rs = null;
         String ip[] = new String[3];
         try {
-            PreparedStatement pstmt  = conn.prepareStatement(sql_command);
-            ResultSet rs = pstmt.executeQuery();
+            stmt  = conn.createStatement();
+            rs = stmt.executeQuery(sql_command);
 
-            if(rs.next()) {
+            if(rs.next() && rs!=null) {
                 ip[0] = rs.getString("USERNAME");
                 System.out.println(ip[0]);
                 ip[1] = rs.getString("HELP_MESSAGE");
@@ -77,6 +79,13 @@ public class Select {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            try {
+                stmt.close();
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
             Connect.closeConnection();
         }
 
