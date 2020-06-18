@@ -15,6 +15,7 @@ public class CreateTable {
             Statement stmt = conn.createStatement();
             stmt.execute(sql_command);
             System.out.println("TABLE CREATED");
+            stmt.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {

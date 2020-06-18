@@ -2,6 +2,7 @@ package Interface;
 
 import Network.Client;
 import Network.Generic;
+import Network.Server;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,6 +37,8 @@ public class ChatInterface extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 ConnectionOption.sendMessage("NAME has left the chat");
                 ConnectionOption.closeConnection();
+
+
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
