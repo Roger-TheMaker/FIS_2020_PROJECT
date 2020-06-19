@@ -1,11 +1,12 @@
 package Network;
 
 import Interface.ChatInterface;
+import Interface.ChatInterface_V2;
 
 import java.net.*;
 import java.io.*;
 
-public class Server implements Runnable, Generic{
+public class Server {
     private static Socket socket = null;
     private static ServerSocket server = null;
     private static DataInputStream input = null;
@@ -13,7 +14,7 @@ public class Server implements Runnable, Generic{
     private static int connectionStatus = 0;
     private static int port = 55666;
 
-    public void run() {
+    public synchronized static void run() {
 
         try{
             server = new ServerSocket(port);
@@ -22,7 +23,7 @@ public class Server implements Runnable, Generic{
             input = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
             System.out.println("CONNECTED");
-            ChatInterface.ChatBox(this);
+            ChatInterface_V2.Chat();
 
         }catch(Exception e){System.out.println(e);
         } finally {
@@ -30,7 +31,7 @@ public class Server implements Runnable, Generic{
         }
     }
 
-    public void closeConnection() {
+    public static void closeConnection() {
         try {
             input.close();
             out.close();
@@ -41,7 +42,7 @@ public class Server implements Runnable, Generic{
 
     }
 
-    public void closeSocket() {
+    public static void closeSocket() {
         try {
 
             server.close();
@@ -51,7 +52,7 @@ public class Server implements Runnable, Generic{
         }
     }
 
-    public String receiveMessage() {
+    public static String receiveMessage() {
         try {
             return(String)input.readUTF();
 
@@ -64,7 +65,7 @@ public class Server implements Runnable, Generic{
         return "";
     }
 
-    public void sendMessage(String message) {
+    public static void sendMessage(String message) {
         try {
             out.writeUTF(message);
         } catch (IOException e) {

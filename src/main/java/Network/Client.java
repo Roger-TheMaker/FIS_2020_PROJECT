@@ -5,7 +5,7 @@ import Interface.ChatInterface;
 import java.net.*;
 import java.io.*;
 
-public class Client implements Generic {
+public class Client  {
     private static Socket socket = null;
     private static ServerSocket server = null;
     private static DataInputStream input = null;
@@ -13,7 +13,7 @@ public class Client implements Generic {
     private static int connectionStatus = 0;
     private static int port = 55666;
 
-    public void connect(String address, int port) {
+    public static void connect(String address, int port) {
         // establish a connection
         try{
             socket = new Socket(address,port);
@@ -26,7 +26,7 @@ public class Client implements Generic {
 
     }
 
-    public void sendMessage(String message) {
+    public static void sendMessage(String message) {
         try {
             out.writeUTF(message);
             out.flush();
@@ -42,7 +42,7 @@ public class Client implements Generic {
         }
     }
 
-    public void closeSocket() {
+    public static void closeSocket() {
         try {
             socket.close();
         } catch(IOException e) {
@@ -50,7 +50,7 @@ public class Client implements Generic {
         }
     }
 
-    public String receiveMessage() {
+    public static String receiveMessage() {
         try {
             return(String)input.readUTF();
 
@@ -63,7 +63,7 @@ public class Client implements Generic {
         return "";
     }
 
-    public void closeConnection() {
+    public static void closeConnection() {
         try {
 
             out.close();

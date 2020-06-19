@@ -1,6 +1,7 @@
 package Interface;
 
 import Network.Client;
+import Network.Server;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -12,12 +13,35 @@ public class ChatInterface_V2 extends JDialog {
     private JTextField MessageTextField;
     private JButton buttonCancel;
 
-    public ChatInterface_V2(Client client) {
+    // 0 - server , 1 - client
+    private static boolean client_or_server = false;
+
+    public ChatInterface_V2() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(SendButton);
 
+        Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String message;
+                while (true) {
+                    if (client_or_server == false) {
+                        message = Server.receiveMessage();
 
+                        if (!message.equals("")) {
+                            ConversationArea.append(message + "\n");
+                        }
+                    } else {
+                        message = Client.receiveMessage();
+                        if (!message.equals("")) {
+                            ConversationArea.append(message + "\n");
+                        }
+                    }
+                }
+            }
+        });
+        thread1.start();
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -37,10 +61,7 @@ public class ChatInterface_V2 extends JDialog {
         SendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String message = MessageTextField.getText();
-                ConversationArea.append(message+"\n");
-                System.out.println(message);
-               // client.sendMessage("asd");
+                Client.sendMessage(MessageTextField.getText());
             }
         });
     }
@@ -50,8 +71,11 @@ public class ChatInterface_V2 extends JDialog {
         dispose();
     }
 
-    public static void Chat(Client client) {
-        ChatInterface_V2 dialog = new ChatInterface_V2(client);
+    public static void setClient_or_server(boolean value) {
+        client_or_server = value;
+    }
+    public static void Chat() {
+        ChatInterface_V2 dialog = new ChatInterface_V2();
         dialog.pack();
         dialog.setVisible(true);
     }

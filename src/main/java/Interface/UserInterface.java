@@ -29,6 +29,7 @@ public class UserInterface extends JDialog {
     private JButton buttonCancel;
     public static int RowID = 1;
     private int set = 0;
+    private boolean server_status = true;  // 0 - off, 1 - on
     private static Semaphore semaphore = new Semaphore(1);
     private ArrayList<Triplet<JTextField,JTextField,JButton>> post = new ArrayList<Triplet<JTextField,JTextField,JButton>>();
 
@@ -43,8 +44,18 @@ public class UserInterface extends JDialog {
         String tableContent = "id integer PRIMARY KEY, USERNAME text NOT NULL, HELP_MESSAGE text NOT NULL, IP_ADDRESS text NOT NULL,UNIQUE(HELP_MESSAGE)";
         CreateTable.CreateTable("test.db","POSTS",tableContent);
 
+        Thread thread_server = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(server_status == false) {
+                    Server.closeSocket();
+                } else {
+                    Server.run();
+            }}
+        });
+        thread_server.start();
 
-        Thread thread = new Thread(new Runnable() {
+        Thread thread_update_interface = new Thread(new Runnable() {
             @Override
             public void run() {
                 long threadId = Thread.currentThread().getId();
@@ -70,7 +81,7 @@ public class UserInterface extends JDialog {
                 }
             }
         });
-        thread.start();
+        thread_update_interface.start();
 
         U_Button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -99,6 +110,10 @@ public class UserInterface extends JDialog {
 
             }
         });
+    }
+
+    public void setServerStatus(boolean value) {
+        server_status = value;
     }
 
     private void onOK() {
@@ -181,13 +196,14 @@ public class UserInterface extends JDialog {
                 System.out.println(GetMyIPLocal.getMyIPLocal());
                 System.out.println(ipAddress);
 
-                Server server = new Server();
-                server.closeSocket();
+               server_status = false;
 
-                Client client = new Client();
                 System.out.println(ipAddress);
-                client.connect(ipAddress, 55666);
-                ChatInterface_V2.Chat(client);
+
+                //change back to ipAddress
+                Client.connect("192.168.43.237", 55666);
+                ChatInterface_V2.setClient_or_server(true);
+                ChatInterface_V2.Chat();
 
             }
         });

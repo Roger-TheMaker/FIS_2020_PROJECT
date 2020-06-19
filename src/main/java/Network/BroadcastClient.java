@@ -76,7 +76,7 @@ public class BroadcastClient {
             socket.setBroadcast(true);
 
             byte[] buffer = message.getBytes();
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName("192.168.1.255"), 61000);
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName("255.255.255.255"), 61000);
             socket.send(packet);
 
         }catch(Exception ex) {

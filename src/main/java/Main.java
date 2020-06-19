@@ -5,7 +5,9 @@ import Interface.RegistrationPage;
 import Interface.UserInterface;
 import Network.*;
 import SQLite.CreateTable;
+import SQLite.Select;
 
+import org.apache.log4j.Logger;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -17,9 +19,7 @@ public class Main {
 
         if( LoginPage.getLoginStatus() == 1 ) {
 
-            Server server = new Server();
-            Thread thread_chatServer = new Thread(server);
-            thread_chatServer.start();
+
 
             BroadcastServer broadcastServer = new BroadcastServer();
             Thread thread_broadcastPost = new Thread(broadcastServer);
