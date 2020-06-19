@@ -1,7 +1,9 @@
 package Interface;
 
 import Network.*;
-import SQLite.*;
+import SQLite.CreateTable;
+import SQLite.Delete;
+import SQLite.Select;
 import org.javatuples.Triplet;
 
 import javax.swing.*;
@@ -10,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
-import java.util.logging.Logger;
 
 public class UserInterface extends JDialog {
 
@@ -18,7 +19,7 @@ public class UserInterface extends JDialog {
     private JPanel buttons_Panel;
     private JPanel posts_Panel;
     private JButton AddButton;
-    private JButton V_Button;
+    private JButton U_Button;
     private JTextField welcomeSummonerTextField;
     private JTextField PostTextField;
     private JScrollPane PostBox;
@@ -47,7 +48,7 @@ public class UserInterface extends JDialog {
             @Override
             public void run() {
                 long threadId = Thread.currentThread().getId();
-             System.out.println(threadId);
+                System.out.println(threadId);
 
                 while(true) {
                     //Row[0] = username
@@ -71,17 +72,15 @@ public class UserInterface extends JDialog {
         });
         thread.start();
 
-
-        V_Button.addActionListener(new ActionListener() {
+        U_Button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                System.out.println("In a future implementation ");
             }
         });
         AddButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String message = "MESSAGE"+addPost(UserService.user);
-               BroadcastClient.run(message);
-
+                BroadcastClient.run(message);
 
 
             }
@@ -117,7 +116,7 @@ public class UserInterface extends JDialog {
 
         System.out.println(valueList);
 
-     //   Insert.Insert("test.db","POSTS",parameterList,valueList);
+        //   Insert.Insert("test.db","POSTS",parameterList,valueList);
 
         return valueList;
 
@@ -140,8 +139,8 @@ public class UserInterface extends JDialog {
         for(int i = 0; i < post.size(); i++) {
             for(Object obj : post.get(i)) {
                 if(obj instanceof JTextField && ((JTextField) obj).getText().equals(UserService.user)) {
-                   removeComponent(post.get(i));
-                   break;
+                    removeComponent(post.get(i));
+                    break;
                 }
 
             }
@@ -153,13 +152,11 @@ public class UserInterface extends JDialog {
         posts_Panel.repaint();
         RowID = 1;
 
-
     }
 
     private void printPost(String usrname, String post, String ipAddress) {
         if(usrname == null || post == null || ipAddress == null)
             return;
-
 
 
         JTextField PostTextField = new JTextField("");
@@ -170,30 +167,30 @@ public class UserInterface extends JDialog {
 
         JTextField usernameTextField =new JTextField("");
         usernameTextField.setPreferredSize( new Dimension( 80, 26) );
-            usernameTextField.setText( username);
+        usernameTextField.setText( username);
 
 
         JButton RespondButton = new JButton("Respond Post");
         this.post.add(Triplet.with(usernameTextField,PostTextField,RespondButton));
 
 
-            RespondButton.setBounds(500, 500, 100, 20);
-            RespondButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println(GetMyIPLocal.getMyIPLocal());
-                    System.out.println(ipAddress);
+        RespondButton.setBounds(500, 500, 100, 20);
+        RespondButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(GetMyIPLocal.getMyIPLocal());
+                System.out.println(ipAddress);
 
-                        Server server = new Server();
-                        server.closeSocket();
+                Server server = new Server();
+                server.closeSocket();
 
-                        Client client = new Client();
-                        System.out.println(ipAddress);
-                        client.connect(ipAddress, 55666);
-                        ChatInterface_V2.Chat(client);
+                Client client = new Client();
+                System.out.println(ipAddress);
+                client.connect(ipAddress, 55666);
+                ChatInterface_V2.Chat(client);
 
-                }
-            });
+            }
+        });
 
         posts_Panel.add(usernameTextField);
         posts_Panel.add(PostTextField);
@@ -206,8 +203,6 @@ public class UserInterface extends JDialog {
 
         return;
     }
-
-
 
     public static void UserInterface() {
         UserInterface p = new UserInterface();
