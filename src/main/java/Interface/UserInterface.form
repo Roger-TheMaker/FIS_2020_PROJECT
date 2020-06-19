@@ -24,12 +24,12 @@
               <text value="Post Announcement"/>
             </properties>
           </component>
-          <component id="46ec2" class="javax.swing.JButton" binding="V_Button">
+          <component id="46ec2" class="javax.swing.JButton" binding="U_Button">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Visualize announcements"/>
+              <text value="Update announcements"/>
             </properties>
           </component>
           <component id="eca99" class="javax.swing.JTextField" binding="welcomeSummonerTextField" default-binding="true">
