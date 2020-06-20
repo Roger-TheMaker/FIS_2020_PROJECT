@@ -1,79 +1,74 @@
 package Network;
-
-import Interface.ChatInterface;
-
-import java.net.*;
 import java.io.*;
+import java.net.*;
+import java.util.Scanner;
 
-public class Client  {
-    private static Socket socket = null;
-    private static ServerSocket server = null;
-    private static DataInputStream input = null;
-    private static DataOutputStream out = null;
-    private static int connectionStatus = 0;
-    private static int port = 55666;
+// Client class
+public class Client extends Thread
+{
+    private DataInputStream dis;
+    private DataOutputStream dos;
+    private String tosend = "";
+    private String message = "";
+    private String ipAddress;
+    private int port;
 
-    public static void connect(String address, int port) {
-        // establish a connection
-        try{
-            socket = new Socket(address,port);
-            out = new DataOutputStream(socket.getOutputStream());
-            input = new DataInputStream(socket.getInputStream());
-            System.out.println("CONNECTED");
-
-        }catch(Exception e){System.out.println(e);
-        }
-
+    public void setMessage(String message) {
+        message = message;
     }
+    public void setData(String ipAddress,int port) {
+        this.ipAddress = ipAddress;
+        this.port = port;
+    }
+    public void run()
+    {
+        try
+        {
+            Scanner scn = new Scanner(System.in);
 
-    public static void sendMessage(String message) {
-        try {
-            out.writeUTF(message);
-            out.flush();
+            // getting localhost ip
+            InetAddress ip = InetAddress.getByName(ipAddress);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            // establish the connection with server port 5056
+            Socket s = new Socket(ip, port);
+
+            // obtaining input and out streams
+            dis = new DataInputStream(s.getInputStream());
+            dos = new DataOutputStream(s.getOutputStream());
+
+            // the following loop performs the exchange of
+            // information between client and client handler
+            while (true)
+            {
+                System.out.println(dis.readUTF());
+                if(!message.equals("")) {
+                tosend = message;
+                dos.writeUTF(tosend);
+
+                }
+
+
+                // If client sends exit,close this connection
+                // and then break from the while loop
+                if(tosend.equals("Exit"))
+                {
+                    System.out.println("Closing this connection : " + s);
+                    s.close();
+                    System.out.println("Connection closed");
+                    break;
+                }
+
+                // printing date or time as requested by client
+                String received = dis.readUTF();
+                System.out.println(received);
             }
-        }
-    }
 
-    public static void closeSocket() {
-        try {
-            socket.close();
-        } catch(IOException e) {
+            // closing resources
+            scn.close();
+            dis.close();
+            dos.close();
+        }catch(Exception e){
             e.printStackTrace();
         }
     }
-
-    public static String receiveMessage() {
-        try {
-            return(String)input.readUTF();
-
-        } catch(EOFException b) {
-            System.out.println("LOL");
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "";
-    }
-
-    public static void closeConnection() {
-        try {
-
-            out.close();
-            input.close();
-            socket.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 }
