@@ -1,5 +1,6 @@
 package SQLite;
 
+import java.awt.*;
 import java.sql.Statement;
 import java.sql.*;
 
@@ -62,7 +63,7 @@ public class Select {
         Connection conn = Connect.connect(nameDB);
         Statement stmt = null;
         ResultSet rs = null;
-        String ip[] = new String[3];
+        String ip[] = new String[4];
         try {
             stmt  = conn.createStatement();
             rs = stmt.executeQuery(sql_command);
@@ -74,6 +75,8 @@ public class Select {
                 System.out.println(ip[1]);
                 ip[2] = rs.getString("IP_ADDRESS");
                 System.out.println(ip[2]);
+                ip[3] = rs.getString("PORT_NUMBER");
+                System.out.println(ip[3]);
             }
 
         } catch (SQLException e) {

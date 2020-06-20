@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class BroadcastServer implements Runnable {
     private static DatagramSocket socket;
     public static String message;
-    @Override
+
     public void run() {
         try {
             socket = new DatagramSocket(61000, InetAddress.getByName("0.0.0.0"));
@@ -32,18 +32,21 @@ public class BroadcastServer implements Runnable {
                 System.out.println(getClass().getName() + ">>>Packet received; data: " + new String(message));
                 if(message.contains("MESSAGE")) {
                     message = message.replaceAll("MESSAGE", "");
-                    String tableContent = "id integer PRIMARY KEY, USERNAME text NOT NULL, HELP_MESSAGE text NOT NULL, IP_ADDRESS text NOT NULL, UNIQUE(HELP_MESSAGE)";
+                    String tableContent = "id integer PRIMARY KEY, USERNAME text NOT NULL, HELP_MESSAGE text NOT NULL, IP_ADDRESS text NOT NULL,PORT_NUMBER text NOT NULL,UNIQUE(HELP_MESSAGE)";
                     CreateTable.CreateTable("test.db", "POSTS", tableContent);
 
-                    String parameterList = "USERNAME, HELP_MESSAGE, IP_ADDRESS";
+                    String parameterList = "USERNAME, HELP_MESSAGE, IP_ADDRESS, PORT_NUMBER";
                     Insert.Insert("test.db", "POSTS", parameterList, message);
+                //    message = "";
                 }
                 else if(message.contains("DELETE")) {
+                    System.out.println("DELETING MESSAGE FROM : " + message);
                     message = message.replaceAll("DELETE","");
                     String sql_command = "DELETE FROM POSTS WHERE USERNAME = " + "\'"+ message +"\'";
                     Delete.DeleteEntry("test.db","POSTS",sql_command);
                     System.out.println("POST DELETED");
                     UserInterface.RowID = 1;
+                 //   message = "";
                 }
               //  System.out.println(getClass().getName() + ">>>Packet received; data: " + new String(message));
             }

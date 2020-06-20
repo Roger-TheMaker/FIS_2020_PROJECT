@@ -25,10 +25,11 @@ public class ChatInterface extends JDialog {
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 String message = ConnectionOption.receiveMessage();
-                while(!message.equals("")) {
+                while (!message.equals("")) {
                     ChatBox.append(message);
                     message = ConnectionOption.receiveMessage();
-                }}
+                }
+            }
         });
         thread.start();
 
@@ -47,7 +48,7 @@ public class ChatInterface extends JDialog {
 
             public void actionPerformed(ActionEvent e) {
                 String message = MessageTextField.getText();
-                ChatBox.append( message + "\n");
+                ChatBox.append(message + "\n");
                 ConnectionOption.sendMessage(message);
                 MessageTextField.setText("");
             }
@@ -77,4 +78,5 @@ public class ChatInterface extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
     }
+
 }

@@ -6,6 +6,8 @@ import SQLite.Insert;
 import SQLite.Select;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.awt.event.*;
 
 public class RegistrationPage extends JDialog {
@@ -17,9 +19,9 @@ public class RegistrationPage extends JDialog {
     private JPasswordField PassowordTextField;
     private JPasswordField PasswordConfirmationTextField;
     private JButton RegisterButton;
+    private JPanel jpanel;
     private JButton buttonOK;
     private JButton buttonCancel;
-
 
 
     public RegistrationPage() {
@@ -32,8 +34,6 @@ public class RegistrationPage extends JDialog {
         UsernameTextField.setText("Username");
         PassowordTextField.setText("password");
         PasswordConfirmationTextField.setText("password");
-
-
 
 
         // call onCancel() when cross is clicked
@@ -67,38 +67,36 @@ public class RegistrationPage extends JDialog {
 
                 String tableContent = "id integer PRIMARY KEY, FirstName text NOT NULL, LastName text NOT NULL, " +
                         "Email text NOT NULL, Username text NOT NULL, Password text NOT NULL ";
-                CreateTable.CreateTable("test.db","REGISTRATION",tableContent);
+                CreateTable.CreateTable("test.db", "REGISTRATION", tableContent);
 
 
                 String sql_check_username = "SELECT * FROM REGISTRATION WHERE Username = " + "\'" + username + "\'";
                 String sql_check_email = "SELECT * FROM REGISTRATION WHERE Email = " + "\'" + email + "\'";
 
                 //update the values for existance checking
-                checkgetEmail = Select.CheckEntry("test.db",sql_check_email);
-                checkgetUsername = Select.CheckEntry("test.db",sql_check_username);
+                checkgetEmail = Select.CheckEntry("test.db", sql_check_email);
+                checkgetUsername = Select.CheckEntry("test.db", sql_check_username);
 
 
                 String parameterList = "FirstName, LastName, Email, Username, Password";
 
-                String valueList = "\'" + firstname + "\'" +", "+ "\'" + lastname + "\'"+", "+"\'" + email + "\'"+", " +
-                        "\'" + username + "\'"+", " + "\'" + password_hash + "\'";;
+                String valueList = "\'" + firstname + "\'" + ", " + "\'" + lastname + "\'" + ", " + "\'" + email + "\'" + ", " +
+                        "\'" + username + "\'" + ", " + "\'" + password_hash + "\'";
+                ;
 
                 System.out.println(valueList);
                 System.out.println(checkgetEmail);
 
-                if(checkgetEmail.equals("0") || checkgetUsername.equals("0")) {
-                    Insert.Insert("test.db","REGISTRATION",parameterList,valueList);
+                if (checkgetEmail.equals("0") || checkgetUsername.equals("0")) {
+                    Insert.Insert("test.db", "REGISTRATION", parameterList, valueList);
                     FirstNameTextField.setText("ACCOUNT CREATED");
-                }
-                else {
-                    if(checkgetEmail.equals("1") && checkgetUsername.equals("1")) {
+                } else {
+                    if (checkgetEmail.equals("1") && checkgetUsername.equals("1")) {
                         EmailTextField.setText("Email already exist");
                         UsernameTextField.setText("Username already exists");
-                    }
-                    else if(checkgetEmail.equals("1")) {
+                    } else if (checkgetEmail.equals("1")) {
                         EmailTextField.setText("Email already exists");
-                    }
-                    else if(checkgetUsername.equals("1")) {
+                    } else if (checkgetUsername.equals("1")) {
                         UsernameTextField.setText("Username already exists");
                     }
                 }
@@ -108,7 +106,7 @@ public class RegistrationPage extends JDialog {
 
     private void onOK() {
         // add your code here
-       dispose();
+        dispose();
     }
 
     private void onCancel() {
@@ -121,7 +119,8 @@ public class RegistrationPage extends JDialog {
         RegistrationPage dialog = new RegistrationPage();
         dialog.pack();
         dialog.setTitle("Register Form");
-        dialog.setSize(230,300);
+        dialog.setSize(230, 300);
         dialog.setVisible(true);
     }
+
 }

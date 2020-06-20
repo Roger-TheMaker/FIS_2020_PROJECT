@@ -7,6 +7,7 @@ import SQLite.Select;
 
 import javax.security.auth.SubjectDomainCombiner;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class LoginPage extends JDialog {
@@ -15,11 +16,13 @@ public class LoginPage extends JDialog {
     private JPasswordField PasswordTextField;
     private JButton LoginButton;
     private JButton RegisterButton;
+    private JPanel panel;
     private JButton buttonOK;
     private JButton buttonCancel;
     private static int loginStatus = 0;
 
     public LoginPage() {
+        //   $$$setupUI$$$();
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -54,10 +57,9 @@ public class LoginPage extends JDialog {
                 String password_hashed = MD5.getMd5(String.valueOf(password));
 
 
-
                 String tableContent = "id integer PRIMARY KEY, FirstName text NOT NULL, LastName text NOT NULL, " +
                         "Email text NOT NULL, Username text NOT NULL, Password text NOT NULL ";
-                CreateTable.CreateTable("test.db","REGISTRATION",tableContent);
+                CreateTable.CreateTable("test.db", "REGISTRATION", tableContent);
 
 
                 String sql_check_username = "SELECT * FROM REGISTRATION WHERE Username = " + "\'" + UsernameEmailTextField.getText() + "\'";
@@ -65,17 +67,16 @@ public class LoginPage extends JDialog {
                 String sql_check_password = "SELECT * FROM REGISTRATION WHERE Password = " + "\'" + password_hashed + "\'";
 
                 //update the values for existance checking
-                checkUsername = Select.CheckEntry("test.db",sql_check_username);
-                checkPassword = Select.CheckEntry("test.db",sql_check_password);
-                checkEmail = Select.CheckEntry("test.db",sql_check_email);
+                checkUsername = Select.CheckEntry("test.db", sql_check_username);
+                checkPassword = Select.CheckEntry("test.db", sql_check_password);
+                checkEmail = Select.CheckEntry("test.db", sql_check_email);
 
-                if((checkEmail.equals("1") || checkUsername.equals("1")) && checkPassword.equals("1")  ) {
+                if ((checkEmail.equals("1") || checkUsername.equals("1")) && checkPassword.equals("1")) {
 
                     loginStatus = 1;
                     UserService.user = UsernameEmailTextField.getText();
                     onCancel();
-                }
-                else {
+                } else {
                     UsernameEmailTextField.setText("INVALID USERNAME OR PASSWORD");
                 }
 
@@ -108,7 +109,13 @@ public class LoginPage extends JDialog {
         LoginPage dialog = new LoginPage();
         dialog.pack();
         dialog.setTitle("Login");
-        dialog.setSize(200,200);
+        dialog.setSize(200, 200);
         dialog.setVisible(true);
     }
+
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
+
 }

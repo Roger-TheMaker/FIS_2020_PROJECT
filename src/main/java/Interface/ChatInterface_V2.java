@@ -1,24 +1,23 @@
 package Interface;
 
-import Network.Client;
-
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
-public class ChatInterface_V2 extends JDialog {
+public class ChatInterface_V2 extends JDialog implements Runnable {
     private JPanel contentPane;
     private JButton SendButton;
     private JTextArea ConversationArea;
     private JTextField MessageTextField;
+    private JPanel panel1;
+    private JPanel panel2;
+    private JPanel panel3;
     private JButton buttonCancel;
 
-    public ChatInterface_V2(Client client) {
+    public ChatInterface_V2() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(SendButton);
-
-
-
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -37,12 +36,20 @@ public class ChatInterface_V2 extends JDialog {
         SendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String message = MessageTextField.getText();
-                ConversationArea.append(message+"\n");
-                System.out.println(message);
-               // client.sendMessage("asd");
+
             }
         });
+    }
+
+    public void setConversationMessage(String message) {
+        ConversationArea.append(message + "\n");
+    }
+
+    public String getMessage() {
+        if (MessageTextField.getText().equals("")) {
+            return "";
+        }
+        return MessageTextField.getText();
     }
 
     private void onCancel() {
@@ -50,9 +57,11 @@ public class ChatInterface_V2 extends JDialog {
         dispose();
     }
 
-    public static void Chat(Client client) {
-        ChatInterface_V2 dialog = new ChatInterface_V2(client);
+
+    public void run() {
+        ChatInterface_V2 dialog = new ChatInterface_V2();
         dialog.pack();
         dialog.setVisible(true);
     }
+
 }
