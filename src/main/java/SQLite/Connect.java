@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class Connect {
     private static Connection conn = null;
 
-    public synchronized static Connection connect(String nameDB) throws  Not_A_DB_File{
+    public synchronized static Connection connect(String nameDB) throws  Not_A_DB_File {
 
         if(!nameDB.endsWith(".db")){
 
@@ -24,6 +24,7 @@ public class Connect {
             String url = "jdbc:sqlite:" + nameDB;
             // create a connection to the database
             conn = DriverManager.getConnection(url);
+
 
            // System.out.println("Connection to SQLite has been established.");
 
