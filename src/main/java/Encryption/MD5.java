@@ -1,12 +1,18 @@
 package Encryption;
 
+import Exceptions.Empty_String;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 // Java program to calculate MD5 hash value
 public class MD5 {
-    public static String getMd5(String input) {
+    public static String getMd5(String input) throws Empty_String
+    {
+        if(input.isEmpty())
+            throw  new Empty_String();
+
         try {
 
             // Static getInstance method is called with hashing MD5
