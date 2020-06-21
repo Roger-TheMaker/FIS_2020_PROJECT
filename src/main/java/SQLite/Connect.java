@@ -2,6 +2,8 @@
 
 package SQLite;
 
+import Exceptions.Not_A_DB_File;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -9,7 +11,13 @@ import java.sql.SQLException;
 public class Connect {
     private static Connection conn = null;
 
-    public synchronized static Connection connect(String nameDB) {
+    public synchronized static Connection connect(String nameDB) throws  Not_A_DB_File{
+
+        if(!nameDB.endsWith(".db")){
+
+            throw  new Not_A_DB_File();
+        }
+
 
         try {
             // db parameters
